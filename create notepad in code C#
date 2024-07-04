@@ -1,0 +1,22 @@
+            //defines destiny
+            string curDir = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.ToString());
+            curDir += @"\Resources\";
+
+            //checks if the file exists
+            if (File.Exists(curDir + "credenciais.txt"))
+            {
+                //Read
+                StreamReader sr = new StreamReader(curDir + "credenciais.txt");
+                controleAtualizacao = sr.ReadLine();
+                sr.Close();
+                sr.Dispose();
+                Application.DoEvents();
+            }
+            else
+            {
+                //Write
+                StreamWriter sw = new StreamWriter(curDir + "credenciais.txt");
+                sw.WriteLine(controleAtualizacao);
+                sw.Close();
+                sw.Dispose();
+            }
