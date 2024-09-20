@@ -1,0 +1,18 @@
+[DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+
+public static extern IntPtr CreateRoundRectRgn(
+  int nLeftRect,
+  int nTopRect,
+  int nRightRect,
+  int nBottomRect,
+  int nWidthEllipse,
+  int nHeightEllipse);
+
+[DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
+
+public static extern bool DeleteObject(IntPtr hObject);
+
+## Aqui é o método criado automático na aba Eventos do botão/panel
+private void Button_Paint(object sender, PaintEventArgs e){
+  IntPtr ptr = NativeMethods.CreateRoundRectRgn(4, 4, Button.Width, Button.Height, 15, 15);
+  NativeMethods.Deleteobject(ptr);
