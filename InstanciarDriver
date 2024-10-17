@@ -1,0 +1,47 @@
+        IWebDriver driver;
+        private string URL = "https://sga.tjce.jus.br/guias";
+        public bool InstanciarDriver()
+        {
+            try
+            {
+                string curDir = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.ToString());
+                curDir += @"\Resources\";
+                FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(curDir, "geckodriver.exe");
+                service.FirefoxBinaryPath = curDir + @"Mozilla Firefox\firefox.exe";
+                service.HideCommandPromptWindow = true;
+
+                FirefoxOptions op = new FirefoxOptions();
+                op.AcceptInsecureCertificates = true;
+                //Trocar HideCommandPromptWindow para true e habilitar o argumento headless para deixar o navegador invisível
+
+                op.SetPreference("browser.download.dir", Emissor.saveFilePath);
+                op.SetPreference("browser.download.folderList", 2);
+                op.SetPreference("browser.download.manager.showWhenStarting", false);
+                op.SetPreference("browser.download.manager.alertOnEXEOpen", false);
+                op.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
+                op.SetPreference("browser.download.manager.showWhenStarting", false);
+                op.SetPreference("browser.download.manager.focusWhenStarting", false);
+                op.SetPreference("browser.download.useDownloadDir", true);
+                op.SetPreference("browser.helperApps.alwaysAsk.force", false);
+                op.SetPreference("browser.download.manager.alertOnEXEOpen", false);
+                op.SetPreference("browser.download.manager.closeWhenDone", true);
+                op.SetPreference("browser.download.manager.showAlertOnComplete", false);
+                op.SetPreference("browser.download.manager.useWindow", false);
+                op.SetPreference("services.sync.prefs.sync.browser.download.manager.showWhenStarting", false);
+                op.SetPreference("dom.disable_beforeunload", true);
+                op.SetPreference("browser.helperApps.neverAsk.openFile", "application/octet-stream");
+                //op.SetPreference("pdfjs.disabled", true);
+                op.SetPreference("print.always_print_silent", true);
+                op.SetPreference("print_printer", "Foxit Reader PDF Printer");
+                //op.SetPreference("print.printer_Microsoft_Print_to_PDF.print_to_filename", "testprint.pdf")
+
+                op.SetPreference("layout.css.devPixelsPerPx", "0.9");
+
+                driver = new FirefoxDriver(service, op);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
